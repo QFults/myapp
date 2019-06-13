@@ -1,0 +1,14 @@
+my_db
+-----
+
+users
+-----
+   name
+   email
+   username
+   password
+
+posts
+-----
+   title
+   body
