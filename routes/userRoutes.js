@@ -1,4 +1,5 @@
 const { User } = require('../models')
+const jwt = require('jsonwebtoken')
 
 module.exports = app => {
   // Register A User
@@ -16,7 +17,10 @@ module.exports = app => {
   app.get('/login/:username/:password', (req, res) => {
     User.authenticate()(req.params.username, req.params.password, (e, user) => {
       if (e) throw e
-      res.json(user)
+      res.json({
+        user: user.username,
+        token: jwt.sign({ id: user._id }, 'hotdog')
+      })
     })
   })
 }
