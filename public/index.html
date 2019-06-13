@@ -7,6 +7,68 @@
   <title>Document</title>
 </head>
 <body>
-  <h1>Hello World!</h1>
+  <form>
+    <p>
+      <label for="name">name</label>
+      <input id="name" type="text">
+    </p>
+    <p>
+      <label for="email">email</label>
+      <input id="email" type="text">
+    </p>
+    <p>
+      <label for="username">username</label>
+      <input id="username" type="text">
+    </p>
+    <p>
+      <label for="password">password</label>
+      <input id="password" type="text">
+    </p>
+    <p>
+      <button id="register">Register</button>
+    </p>
+  </form>
+  <hr>
+  <form>
+    <p>
+      <label for="_username">username</label>
+      <input id="_username" type="text">
+    </p>
+    <p>
+      <label for="_password">password</label>
+      <input id="_password" type="text">
+    </p>
+    <p>
+      <button id="login">Login</button>
+    </p>
+  </form>
+  <script>
+    const { fetch } = window
+
+    document.querySelector('#register').addEventListener('click', e => {
+      e.preventDefault()
+      fetch('/users', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: document.querySelector('#name').value,
+          email: document.querySelector('#email').value,
+          username: document.querySelector('#username').value,
+          password: document.querySelector('#password').value
+        })
+      })
+    })
+    document.querySelector('#login').addEventListener('click', e => {
+      e.preventDefault()
+      fetch(`/login/${document.querySelector('#_username').value}/${document.querySelector('#_password').value}`)
+        .then(r => r.json())
+        .then(user => {
+          console.log(user)
+        })
+        .catch(e => console.error(e))
+    })
+  </script>
 </body>
 </html>

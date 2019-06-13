@@ -1,18 +1,22 @@
 const { User } = require('../models')
 
 module.exports = app => {
-  // GET all users
-  app.get('/users', (req, res) => {
-    User.find({})
-      .populate('posts')
-      .then(users => res.json(users))
-      .catch(e => console.log(e))
+  // Register A User
+  app.post('/users', (req, res) => {
+    User.register(new User({
+      name: req.body.name,
+      email: req.body.email,
+      username: req.body.username
+    }), req.body.password, e => {
+      if (e) throw e
+      res.sendStatus(200)
+    })
   })
 
-  // POST a user
-  app.post('/users', (req, res) => {
-    User.create(req.body)
-      .then(_ => res.sendStatus(200))
-      .catch(e => console.log(e))
+  app.get('/login/:username/:password', (req, res) => {
+    User.authenticate()(req.params.username, req.params.password, (e, user) => {
+      if (e) throw e
+      res.json(user)
+    })
   })
 }
