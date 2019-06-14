@@ -3,12 +3,13 @@ module.exports = (Schema, model) => {
     name: String,
     email: String,
     username: String,
-    password: String,
     posts: [{
       type: Schema.Types.ObjectId,
       ref: 'Post'
     }]
   })
+
+  User.plugin(require('passport-local-mongoose'))
 
   return model('User', User)
 }

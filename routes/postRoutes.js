@@ -1,8 +1,9 @@
 const { Post, User } = require('../models')
+const passport = require('passport')
 
 module.exports = app => {
   // GET all posts
-  app.get('/posts', (req, res) => {
+  app.get('/posts', passport.authenticate('jwt', { session: false }), (req, res) => {
     Post.find({})
       .populate('author')
       .then(posts => res.json(posts))
