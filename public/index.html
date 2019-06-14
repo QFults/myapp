@@ -7,6 +7,7 @@
   <title>Document</title>
 </head>
 <body>
+  <h3>Register:</h3>
   <form>
     <p>
       <label for="name">name</label>
@@ -28,6 +29,7 @@
       <button id="register">Register</button>
     </p>
   </form>
+  <h3>Log In:</h3>
   <hr>
   <form>
     <p>
@@ -42,47 +44,21 @@
       <button id="login">Login</button>
     </p>
   </form>
+  <h3>Posts:</h3>
   <hr>
   <button id="getPosts">Get Posts</button>
+  <div id="posts"></div>
   <script>
-    const { fetch } = window
 
     document.querySelector('#register').addEventListener('click', e => {
-      e.preventDefault()
-      fetch('/users', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          name: document.querySelector('#name').value,
-          email: document.querySelector('#email').value,
-          username: document.querySelector('#username').value,
-          password: document.querySelector('#password').value
-        })
-      })
+
     })
     document.querySelector('#login').addEventListener('click', e => {
-      e.preventDefault()
-      fetch(`/login/${document.querySelector('#_username').value}/${document.querySelector('#_password').value}`)
-        .then(r => r.json())
-        .then(({ user, token }) => {
-          localStorage.setItem('username', user)
-          localStorage.setItem('token', token)
-        })
-        .catch(e => console.error(e))
+
     })
 
     document.querySelector('#getPosts').addEventListener('click', e => {
-      fetch('/posts', {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }
-      })
-        .then(r => r.json())
-        .then(r => console.log(r))
-        .catch(e => console.error(e))
+
     })
   </script>
 </body>
